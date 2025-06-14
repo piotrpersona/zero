@@ -32,6 +32,7 @@ func From[T any](ptr *T) Optional[T] {
 	return Some(*ptr)
 }
 
+// FromDefault returns the value of the pointer or the default.
 func FromDefault[T any](ptr *T, d T) Optional[T] {
 	if ptr == nil {
 		return Some(d)
