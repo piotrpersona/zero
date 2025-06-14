@@ -36,7 +36,7 @@ func applyOpts(opts ...ParallelOption) *parallelConfig {
 	return &cfg
 }
 
-func IterSlice[T any](arr []T, callback func(context.Context, int, T) error, opts ...ParallelOption) error {
+func Slice[T any](arr []T, callback func(context.Context, int, T) error, opts ...ParallelOption) error {
 	cfg := applyOpts(opts...)
 
 	pool, gctx := errgroup.WithContext(cfg.ctx)
@@ -50,7 +50,7 @@ func IterSlice[T any](arr []T, callback func(context.Context, int, T) error, opt
 	return pool.Wait()
 }
 
-func IterMap[K comparable, V any](hashMap map[K]V, callback func(context.Context, K, V) error, opts ...ParallelOption) error {
+func Map[K comparable, V any](hashMap map[K]V, callback func(context.Context, K, V) error, opts ...ParallelOption) error {
 	cfg := applyOpts(opts...)
 
 	pool, gctx := errgroup.WithContext(cfg.ctx)

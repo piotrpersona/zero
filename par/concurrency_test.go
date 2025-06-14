@@ -20,7 +20,7 @@ func TestConcSlice(t *testing.T) {
 
 		c := int64(0)
 
-		err := par.IterSlice(slice, func(ctx context.Context, i int, val int) error {
+		err := par.Slice(slice, func(ctx context.Context, i int, val int) error {
 			atomic.AddInt64(&c, 1)
 			return nil
 		})
@@ -33,7 +33,7 @@ func TestConcSlice(t *testing.T) {
 
 		slice := []int{1, 2, 3, 4, 5, 6}
 
-		err := par.IterSlice(slice, func(ctx context.Context, i int, val int) error {
+		err := par.Slice(slice, func(ctx context.Context, i int, val int) error {
 			if i%4 == 0 {
 				return errors.New("err")
 			}
@@ -49,7 +49,7 @@ func TestConcSlice(t *testing.T) {
 
 		ctx, cancel := context.WithCancel(context.Background())
 
-		err := par.IterSlice(slice, func(ctx context.Context, i int, val int) error {
+		err := par.Slice(slice, func(ctx context.Context, i int, val int) error {
 			if i%4 == 0 {
 				cancel()
 				return nil
@@ -57,6 +57,6 @@ func TestConcSlice(t *testing.T) {
 			return nil
 		}, par.WithCtx(ctx))
 
-		require.Error(t, err)
+		require.NoError(t, err)
 	})
 }

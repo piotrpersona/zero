@@ -8,12 +8,6 @@ import (
 // NoneErr will be returned if the optional value is none.
 var NoneErr = errors.New("the value is none")
 
-// Optional is type wrapper for any value
-type Optional[T any] struct {
-	value T
-	some  bool
-}
-
 // Some returns non-empty value using v.
 func Some[T any](v T) Optional[T] {
 	return Optional[T]{value: v, some: true}
@@ -38,6 +32,12 @@ func FromDefault[T any](ptr *T, d T) Optional[T] {
 		return Some(d)
 	}
 	return Some(*ptr)
+}
+
+// Optional is type wrapper for any value.
+type Optional[T any] struct {
+	value T
+	some  bool
 }
 
 // Get returns value if Some, and error if None.
