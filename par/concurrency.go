@@ -1,4 +1,4 @@
-package zero
+package par
 
 import (
 	"context"
@@ -36,7 +36,7 @@ func applyOpts(opts ...ParallelOption) *parallelConfig {
 	return &cfg
 }
 
-func ConcSlice[T any](arr []T, callback func(context.Context, int, T) error, opts ...ParallelOption) error {
+func IterSlice[T any](arr []T, callback func(context.Context, int, T) error, opts ...ParallelOption) error {
 	cfg := applyOpts(opts...)
 
 	pool, gctx := errgroup.WithContext(cfg.ctx)
@@ -50,7 +50,7 @@ func ConcSlice[T any](arr []T, callback func(context.Context, int, T) error, opt
 	return pool.Wait()
 }
 
-func ConcMap[K comparable, V any](hashMap map[K]V, callback func(context.Context, K, V) error, opts ...ParallelOption) error {
+func IterMap[K comparable, V any](hashMap map[K]V, callback func(context.Context, K, V) error, opts ...ParallelOption) error {
 	cfg := applyOpts(opts...)
 
 	pool, gctx := errgroup.WithContext(cfg.ctx)
